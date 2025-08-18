@@ -564,10 +564,10 @@ This project was inspired by the need to democratize AI-powered CV analysis and 
 
 ### **Community Guidelines**
 
-☑️ Be respectful and inclusive
-☑️ Help others when you can
-☑️ Share your experiences and use cases
-☑️ Report bugs and suggest improvements
+- ☑️ Be respectful and inclusive
+- ☑️ Help others when you can
+- ☑️ Share your experiences and use cases
+- ☑️ Report bugs and suggest improvements
 
 ## 🔮 Roadmap
 
