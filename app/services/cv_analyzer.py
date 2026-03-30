@@ -8,6 +8,8 @@ class CVAnalyzer:
     
     def __init__(self):
         self.client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+        # GPT-5 family (e.g. gpt-5.4, gpt-5.4-mini); override via OPENAI_CHAT_MODEL
+        self.chat_model = (os.getenv('OPENAI_CHAT_MODEL') or 'gpt-5.4-mini').strip()
         self.skills_patterns = {
             'programming': r'\b(python|java|javascript|react|node\.js|sql|html|css|git|docker|kubernetes|aws|azure|gcp)\b',
             'soft_skills': r'\b(leadership|communication|teamwork|problem solving|project management|agile|scrum)\b',
@@ -100,7 +102,7 @@ class CVAnalyzer:
             """
             
             response = self.client.chat.completions.create(
-                model="gpt-3.5-turbo",
+                model=self.chat_model,
                 messages=[
                     {"role": "system", "content": "You are a professional CV analyst with expertise in recruitment and career development. Provide constructive, actionable feedback."},
                     {"role": "user", "content": prompt}
@@ -111,7 +113,7 @@ class CVAnalyzer:
             
             return {
                 'ai_insights': response.choices[0].message.content,
-                'model_used': 'gpt-3.5-turbo'
+                'model_used': self.chat_model
             }
             
         except Exception as e:
@@ -160,7 +162,7 @@ class CVAnalyzer:
                 return '\n'.join(f"• {l}" for l in lines[:400])
 
             response = self.client.chat.completions.create(
-                model="gpt-3.5-turbo",
+                model=self.chat_model,
                 messages=[
                     {"role": "system", "content": "You are a senior resume writing assistant."},
                     {"role": "user", "content": prompt}
