@@ -7,6 +7,12 @@ AI-assisted CV analysis in the browser: upload a resume, get a score, skills bre
 
 **Stack:** Flask · OpenAI **GPT-5** family ([Chat Completions](https://platform.openai.com/docs/api-reference/chat)) · PyPDF2 / python-docx · Tailwind (CDN) · Hammer.js
 
+## App snapshot
+
+<p align="center">
+  <img src="docs/readme-hero.png" alt="CVNalys landing page — hero with Upload your CV and Watch demo" width="920" />
+</p>
+
 ## Features
 
 - PDF, DOCX, DOC, TXT, RTF (up to 16 MB)
