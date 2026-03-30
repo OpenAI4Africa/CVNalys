@@ -3,211 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CVNalys - Professional CV Analysis Tool</title>
-    
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Google Fonts - Inter for modern typography -->
+    <meta name="description" content="CVNalys — AI-powered CV analysis. Private, fast, and precise.">
+    <meta name="theme-color" content="#1877F2">
+    <title>CVNalys — CV Analysis</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    
-    <!-- Hammer.js for touch gestures -->
     <script src="https://hammerjs.github.io/dist/hammer.min.js"></script>
-    
+
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        'inter': ['Inter', 'sans-serif'],
+                        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
+                        display: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
                     },
                     colors: {
-                        'primary': {
-                            50: '#f0f9ff',
-                            100: '#e0f2fe',
-                            200: '#bae6fd',
-                            300: '#7dd3fc',
-                            400: '#38bdf8',
-                            500: '#0ea5e9',
-                            600: '#0284c7',
-                            700: '#0369a1',
-                            800: '#075985',
-                            900: '#0c4a6e',
-                        },
-                        'secondary': {
-                            50: '#eff6ff',
-                            100: '#dbeafe',
-                            200: '#bfdbfe',
-                            300: '#93c5fd',
-                            400: '#60a5fa',
+                        primary: {
+                            50: '#E7F3FF',
+                            100: '#D1E7FF',
+                            200: '#A6CBF7',
+                            300: '#7AB0F2',
+                            400: '#4296EF',
                             500: '#1877F2',
-                            600: '#2563eb',
-                            700: '#1d4ed8',
-                            800: '#1e40af',
-                            900: '#1e3a8a',
-                        }
-                    }
+                            600: '#166FE5',
+                            700: '#125BB5',
+                            800: '#0E468A',
+                            900: '#0A3363',
+                        },
+                        secondary: {
+                            50: '#fafafa',
+                            100: '#f4f4f5',
+                            200: '#e4e4e7',
+                            300: '#d4d4d8',
+                            400: '#a1a1aa',
+                            500: '#71717a',
+                            600: '#52525b',
+                            700: '#3f3f46',
+                            800: '#27272a',
+                            900: '#18181b',
+                        },
+                    },
+                    boxShadow: {
+                        'premium': '0 1px 2px rgba(0,0,0,0.04), 0 24px 48px -12px rgba(0,0,0,0.12)',
+                        'premium-lg': '0 4px 6px rgba(0,0,0,0.05), 0 32px 64px -16px rgba(0,0,0,0.14)',
+                    },
                 }
             }
         }
     </script>
 </head>
-<body class="font-inter bg-slate-50 text-slate-900 antialiased">
-    
-    <!-- Navigation -->
-    <nav class="bg-white/95 backdrop-blur-xl border-b border-slate-200/60 sticky top-0 z-50 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16 relative">
-                <!-- Left Section -->
-                <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 bg-gradient-to-br from-primary-600 to-secondary-600 rounded-xl flex items-center justify-center shadow-lg">
-                        <i class="fas fa-file-alt text-white text-lg"></i>
-                    </div>
-                    <span class="text-2xl font-bold bg-gradient-to-br from-primary-600 to-secondary-600 bg-clip-text text-transparent">
-                        CVNalys
-                    </span>
-                </div>
-                
-                <!-- Center Logo - Absolutely Centered -->
-                <div class="absolute left-1/2 transform -translate-x-1/2 hidden md:flex items-center justify-center">
-                    <a href="https://sisuai.com" target="_blank" rel="noopener noreferrer" class="hover:scale-110 transition-transform duration-200">
-                        <img src="/static/images/sisuai_icon_wb.svg" alt="SISU AI" class="w-12 h-12">
-                    </a>
-                </div>
-                
-                <!-- Right Section -->
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#features" class="text-slate-600 hover:text-primary-600 transition-colors duration-200 font-medium">Features</a>
-                    <a href="#how-it-works" class="text-slate-600 hover:text-primary-600 transition-colors duration-200 font-medium">How It Works</a>
-                    <button onclick="testAboutUs()" class="text-slate-600 hover:text-primary-600 transition-colors duration-200 font-medium">About Us</button>
-                </div>
+<body class="cv-shell font-sans bg-white text-zinc-900 antialiased">
+
+    <nav class="sticky top-0 z-50 border-b border-zinc-200 bg-white/90 backdrop-blur-md supports-[backdrop-filter]:bg-white/75">
+        <div class="mx-auto flex h-14 max-w-5xl items-center justify-between px-4 sm:px-6">
+            <a href="/" class="font-display text-[15px] font-semibold tracking-tight text-zinc-900">CVNalys</a>
+            <div class="flex flex-wrap items-center justify-end gap-x-5 gap-y-1 text-[12px] font-medium text-zinc-600 sm:text-[13px] sm:gap-x-8">
+                <a href="#features" class="transition hover:text-zinc-900">Features</a>
+                <a href="#how-it-works" class="transition hover:text-zinc-900">How it works</a>
+                <button type="button" onclick="testAboutUs()" class="border-0 bg-transparent p-0 text-[12px] font-medium text-zinc-600 transition hover:text-zinc-900 sm:text-[13px]">About</button>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="relative overflow-hidden bg-gradient-to-br from-white via-slate-50 to-primary-50/30">
-        <canvas id="heroParticles" class="absolute inset-0 w-full h-full pointer-events-none"></canvas>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32 relative">
-            <div class="text-center max-w-4xl mx-auto">
-                <div class="inline-flex items-center px-4 py-2 bg-primary-50 text-primary-700 rounded-full text-sm font-medium mb-8 border border-primary-200">
-                    <i class="fas fa-sparkles mr-2"></i>
-                    AI-Powered CV Analysis
-                    <img src="/static/images/sisuai_icon_wb.svg" alt="SISU AI" class="w-4 h-4 ml-2">
-                </div>
-                
-                <h1 class="text-5xl lg:text-7xl font-bold text-slate-900 mb-8 leading-tight">
-                    Transform Your CV with
-                    <span class="bg-gradient-to-br from-primary-600 to-secondary-600 bg-clip-text text-transparent">
-                        Intelligent Insights
-                    </span>
-                </h1>
-                
-                <p class="text-xl lg:text-2xl text-slate-600 mb-12 max-w-3xl mx-auto leading-relaxed">
-                    Get professional feedback, identify strengths, and receive actionable recommendations to make your CV stand out in today's competitive job market.
-                </p>
-                
-                <!-- CTA Buttons -->
-                <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                    <button id="uploadBtn" class="group relative px-8 py-4 bg-gradient-to-br from-primary-600 to-secondary-600 text-white font-semibold rounded-2xl shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 text-lg">
-                        <div class="absolute inset-0 bg-gradient-to-br from-primary-700 to-secondary-700 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0"></div>
-                        <i class="fas fa-upload mr-3 relative z-10"></i>
-                        <span class="relative z-10">Upload Your CV Now</span>
-                    </button>
-                    <button id="watchDemoBtn" class="px-8 py-4 border-2 border-slate-300 text-slate-700 font-semibold rounded-2xl hover:border-primary-400 hover:text-primary-600 transition-all duration-300 text-lg group">
-                        <i class="fas fa-play mr-3 group-hover:scale-110 transition-transform duration-200"></i>
-                        Watch Demo
-                    </button>
-                </div>
+    <section class="relative overflow-hidden border-b border-zinc-100 bg-zinc-50/80">
+        <canvas id="heroParticles" class="pointer-events-none absolute inset-0 h-full w-full opacity-40"></canvas>
+        <div class="bg-grid-faint pointer-events-none absolute inset-0 opacity-40"></div>
+        <div class="relative mx-auto max-w-4xl px-4 py-20 text-center sm:px-6 sm:py-28 lg:py-32">
+            <p class="mb-6 text-[11px] font-semibold uppercase tracking-[0.22em] text-zinc-500">Private analysis · No storage</p>
+            <h1 class="font-display text-[2rem] font-semibold leading-[1.12] tracking-tight text-zinc-950 sm:text-5xl lg:text-[3.25rem]">
+                Professional CV review,<br class="hidden sm:inline" />
+                <span class="text-zinc-800">distilled.</span>
+            </h1>
+            <p class="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-zinc-600 sm:text-lg">
+                Structured feedback on clarity, skills, and impact. Upload once; your file is processed and not kept as an archive.
+            </p>
+            <div class="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row">
+                <button type="button" id="uploadBtn" class="btn-primary-solid min-w-[220px] rounded-2xl px-10 py-4 text-[15px] font-semibold text-white shadow-premium">
+                    Upload your CV
+                </button>
+                <button type="button" id="watchDemoBtn" class="min-w-[220px] rounded-2xl border border-zinc-200/90 bg-white/90 px-10 py-4 text-[15px] font-semibold text-zinc-900 shadow-sm backdrop-blur-sm transition hover:border-zinc-300 hover:bg-white supports-[backdrop-filter]:bg-white/75">
+                    Watch demo
+                </button>
             </div>
+            <p class="mx-auto mt-10 max-w-md text-[13px] text-zinc-400">PDF, Word, or plain text · Typical analysis under a minute</p>
         </div>
-        
-        <!-- Subtle Background Elements -->
-        <div class="absolute top-20 left-10 w-32 h-32 bg-primary-200/20 rounded-full blur-3xl"></div>
-        <div class="absolute top-40 right-20 w-24 h-24 bg-secondary-200/20 rounded-full blur-3xl"></div>
-        <div class="absolute bottom-20 left-1/4 w-20 h-20 bg-primary-300/20 rounded-full blur-3xl"></div>
     </section>
 
-    <!-- File Upload Section -->
-    <section id="uploadSection" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div class="bg-white rounded-3xl shadow-2xl p-12 border border-slate-100">
-            <div class="text-center mb-8">
-                <div class="w-16 h-16 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-file-alt text-white text-2xl"></i>
+    <section id="uploadSection" class="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
+        <div class="rounded-3xl border border-zinc-200/80 bg-white/95 p-8 shadow-premium backdrop-blur-sm supports-[backdrop-filter]:bg-white/90 sm:p-12">
+            <div class="mb-10 text-center">
+                <div class="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-zinc-900 text-lg font-semibold text-white shadow-md">
+                    <span aria-hidden="true">↑</span>
                 </div>
-                <h2 class="text-3xl font-bold text-slate-900 mb-2">Upload Your CV</h2>
-                <p class="text-slate-600">Supported formats: PDF, DOCX, DOC, TXT, RTF (Max 16MB)</p>
+                <h2 class="font-display text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl">Upload your CV</h2>
+                <p class="mt-3 text-base text-zinc-500">PDF, DOCX, DOC, TXT, RTF — up to 16&nbsp;MB</p>
             </div>
-            
-            <!-- Drag & Drop Zone -->
-            <div id="dropZone" class="border-2 border-dashed border-slate-300 rounded-2xl p-16 text-center hover:border-primary-400 transition-all duration-300 cursor-pointer group hover:bg-slate-50/50">
-                <div class="space-y-6">
-                    <div class="w-24 h-24 bg-gradient-to-br from-primary-50 to-secondary-50 rounded-2xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300">
-                        <i class="fas fa-cloud-upload-alt text-4xl text-primary-500 group-hover:text-primary-600 transition-colors duration-300"></i>
+
+            <div id="dropZone" class="drop-zone-premium group cursor-pointer rounded-2xl border-2 border-dashed border-zinc-200 bg-zinc-50/80 p-12 text-center backdrop-blur-sm transition duration-300 hover:border-primary-400 hover:bg-primary-50/50">
+                <div class="space-y-5">
+                    <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-2xl bg-white text-lg font-semibold text-primary-600 shadow-sm ring-1 ring-zinc-200/80 transition duration-300 group-hover:scale-[1.03] group-hover:ring-primary-200">
+                        CV
                     </div>
                     <div>
-                        <p class="text-2xl font-semibold text-slate-700 mb-2">Drag & Drop your CV here</p>
-                        <p class="text-slate-500 text-lg">or click to browse files</p>
+                        <p class="font-display text-xl font-semibold text-zinc-800">Drop your file here</p>
+                        <p class="mt-1 text-zinc-500">or tap to browse</p>
                     </div>
                 </div>
-                <input type="file" id="fileInput" class="hidden" accept=".pdf,.docx,.doc,.txt,.rtf">
+                <input type="file" id="fileInput" class="hidden" accept=".pdf,.docx,.doc,.txt,.rtf" aria-label="Choose CV file">
             </div>
-            
-            <!-- Upload Progress -->
-            <div id="uploadProgress" class="hidden mt-8">
-                <div class="flex items-center space-x-4 mb-4">
-                    <div class="w-6 h-6 border-2 border-primary-600 border-t-transparent rounded-full animate-spin"></div>
-                    <span class="text-primary-600 font-medium text-lg">Analyzing your CV...</span>
+
+            <div id="uploadProgress" class="mt-10 hidden">
+                <div class="mb-4 flex items-center gap-3">
+                    <div class="h-6 w-6 animate-spin rounded-full border-2 border-primary-600 border-t-transparent"></div>
+                    <span class="text-base font-medium text-primary-800">Analyzing your CV…</span>
                 </div>
-                <div class="w-full bg-slate-200 rounded-full h-3 overflow-hidden">
-                    <div id="progressBar" class="bg-gradient-to-r from-primary-600 to-secondary-600 h-3 rounded-full transition-all duration-500 ease-out" style="width: 0%"></div>
+                <div class="h-2 w-full overflow-hidden rounded-full bg-zinc-200">
+                    <div id="progressBar" class="h-full rounded-full bg-primary-600 transition-all duration-500 ease-out" style="width: 0%"></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Results Section -->
-    <section id="resultsSection" class="hidden max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div class="bg-white rounded-3xl shadow-2xl p-12 border border-slate-100">
-            <div class="text-center mb-12">
-                <div class="w-20 h-20 bg-gradient-to-br from-green-100 to-emerald-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                    <i class="fas fa-chart-line text-3xl text-green-600"></i>
+    <section id="resultsSection" class="hidden mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
+        <div class="rounded-3xl border border-zinc-200/80 bg-white/95 p-8 shadow-premium backdrop-blur-sm supports-[backdrop-filter]:bg-white/90 sm:p-12">
+            <div class="mb-12 text-center">
+                <div class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary-50 text-3xl font-light text-primary-700 ring-1 ring-primary-100" aria-hidden="true">
+                    ◆
                 </div>
-                <h2 class="text-3xl font-bold text-slate-900 mb-4">CV Analysis Results</h2>
-                <p class="text-slate-600 text-lg">Here's what we found about your CV</p>
+                <h2 class="font-display text-3xl font-semibold tracking-tight text-zinc-900 sm:text-4xl">Your analysis</h2>
+                <p class="mt-3 text-lg text-zinc-500">Structured feedback at a glance</p>
             </div>
-            
-            <!-- Score Card -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-                <div class="bg-gradient-to-br from-primary-50 to-primary-100 p-8 rounded-2xl border border-primary-200">
+
+            <div class="mb-14 grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">
+                <div class="rounded-2xl border border-primary-200/80 bg-primary-50/90 p-8 backdrop-blur-sm">
                     <div class="text-center">
-                        <!-- Circular Progress Bar -->
-                        <div class="relative inline-block mb-6">
-                            <svg class="w-28 h-28 transform -rotate-90" viewBox="0 0 100 100">
-                                <!-- Background circle -->
-                                <circle
-                                    cx="50"
-                                    cy="50"
-                                    r="42"
-                                    stroke="#e2e8f0"
-                                    stroke-width="6"
-                                    fill="transparent"
-                                />
-                                <!-- Progress circle -->
+                        <div class="relative mb-6 inline-block">
+                            <svg class="h-28 w-28 -rotate-90 transform" viewBox="0 0 100 100" aria-hidden="true">
+                                <circle cx="50" cy="50" r="42" stroke="#e4e4e7" stroke-width="6" fill="transparent" />
                                 <circle
                                     id="scoreProgress"
                                     cx="50"
                                     cy="50"
                                     r="42"
-                                    stroke="url(#scoreGradient)"
+                                    stroke="#1877F2"
                                     stroke-width="6"
                                     fill="transparent"
                                     stroke-linecap="round"
@@ -215,193 +159,144 @@
                                     stroke-dashoffset="264"
                                     class="transition-all duration-1000 ease-out"
                                 />
-                                <!-- Gradient definition -->
-                                <defs>
-                                    <linearGradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                                        <stop offset="0%" style="stop-color:#0ea5e9;stop-opacity:1" />
-                                        <stop offset="100%" style="stop-color:#a855f7;stop-opacity:1" />
-                                    </linearGradient>
-                                </defs>
                             </svg>
-                            <!-- Score text overlay -->
                             <div class="absolute inset-0 flex items-center justify-center">
                                 <div class="text-center">
                                     <div class="text-3xl font-bold text-primary-700" id="cvScore">0</div>
-                                    <div class="text-sm text-primary-600">%</div>
+                                    <div class="text-sm font-medium text-primary-600">%</div>
                                 </div>
                             </div>
                         </div>
-                        <div class="text-primary-800 font-semibold text-lg" id="scoreLabel">CV Score</div>
+                        <div class="text-sm font-semibold uppercase tracking-wide text-zinc-600" id="scoreLabel">CV score</div>
                     </div>
                 </div>
-                
-                <div class="bg-gradient-to-br from-emerald-50 to-emerald-100 p-8 rounded-2xl border border-emerald-200">
+
+                <div class="rounded-2xl border border-emerald-200/80 bg-emerald-50/90 p-8 backdrop-blur-sm">
                     <div class="text-center">
-                        <div class="w-16 h-16 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                            <i class="fas fa-font text-2xl text-white"></i>
+                        <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-600 font-display text-sm font-bold text-white shadow-sm">
+                            W
                         </div>
-                        <div class="text-4xl font-bold text-emerald-700 mb-2" id="wordCount">0</div>
-                        <div class="text-emerald-800 font-semibold text-lg">Words</div>
+                        <div class="mb-1 text-4xl font-bold tabular-nums text-emerald-900" id="wordCount">0</div>
+                        <div class="text-sm font-semibold uppercase tracking-wide text-emerald-800/90">Words</div>
                     </div>
                 </div>
-                
-                <div class="bg-gradient-to-br from-secondary-50 to-secondary-100 p-8 rounded-2xl border border-secondary-200">
+
+                <div class="rounded-2xl border border-zinc-200 bg-zinc-50/90 p-8 backdrop-blur-sm">
                     <div class="text-center">
-                        <div class="w-16 h-16 bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                            <i class="fas fa-lightbulb text-2xl text-white"></i>
+                        <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-zinc-900 font-display text-sm font-bold text-white shadow-sm">
+                            #
                         </div>
-                        <div class="text-4xl font-bold text-secondary-700 mb-2" id="skillCount">0</div>
-                        <div class="text-secondary-800 font-semibold text-lg">Skills Found</div>
+                        <div class="mb-1 text-4xl font-bold tabular-nums text-zinc-900" id="skillCount">0</div>
+                        <div class="text-sm font-semibold uppercase tracking-wide text-zinc-600">Skills found</div>
                     </div>
                 </div>
             </div>
-            
-            <!-- Analysis Details -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-12">
-                <!-- Skills Analysis -->
-                <div class="space-y-6">
-                    <h3 class="text-2xl font-semibold text-slate-900 flex items-center">
-                        <div class="w-12 h-12 bg-gradient-to-br from-amber-100 to-orange-100 rounded-xl flex items-center justify-center mr-4">
-                            <i class="fas fa-lightbulb text-xl text-amber-600"></i>
-                        </div>
-                        Skills Analysis
+
+            <div class="mb-14 grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-14">
+                <div class="space-y-5">
+                    <h3 class="flex items-center gap-3 font-display text-xl font-semibold text-zinc-900">
+                        <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-zinc-900 text-sm font-bold text-white">S</span>
+                        Skills
                     </h3>
                     <div id="skillsAnalysis" class="space-y-4"></div>
                 </div>
-                
-                <!-- Recommendations -->
-                <div class="space-y-6">
-                    <h3 class="text-2xl font-semibold text-slate-900 flex items-center">
-                        <div class="w-12 h-12 bg-gradient-to-br from-blue-100 to-primary-100 rounded-xl flex items-center justify-center mr-4">
-                            <i class="fas fa-star text-xl text-blue-600"></i>
-                        </div>
+                <div class="space-y-5">
+                    <h3 class="flex items-center gap-3 font-display text-xl font-semibold text-zinc-900">
+                        <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-primary-600 text-sm font-bold text-white">R</span>
                         Recommendations
                     </h3>
                     <div id="recommendations" class="space-y-4"></div>
                 </div>
             </div>
-            
-            <!-- AI Insights -->
-            <div class="bg-gradient-to-br from-blue-50 to-indigo-50 p-8 rounded-2xl border border-blue-200">
-                <div class="flex items-center space-x-3 mb-6">
-                    <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center">
-                        <i class="fas fa-robot text-white text-xl"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-slate-900">AI-Powered Insights</h3>
+
+            <div class="rounded-2xl border border-primary-200/80 bg-primary-50/60 p-8 backdrop-blur-sm">
+                <div class="mb-5 flex items-center gap-3">
+                    <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-primary-600 font-display text-sm font-bold text-white shadow-sm">AI</span>
+                    <h3 class="font-display text-xl font-semibold text-zinc-900">AI insights</h3>
                 </div>
-                <div id="aiInsights" class="prose prose-slate max-w-none ai-insights-content">
-                    <!-- AI insights will be populated here with markdown support -->
-                </div>
+                <div id="aiInsights" class="ai-insights-content prose prose-zinc max-w-none"></div>
             </div>
-            
-            <!-- Action Buttons -->
-            <div class="flex flex-col sm:flex-row gap-6 justify-center mt-12">
-                <button id="newAnalysisBtn" class="px-8 py-4 bg-gradient-to-br from-primary-600 to-secondary-600 text-white font-semibold rounded-2xl hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 text-lg">
-                    <i class="fas fa-redo mr-3"></i>
-                    Analyze Another CV
+
+            <div class="mt-12 flex flex-col items-stretch justify-center gap-4 sm:flex-row sm:flex-wrap">
+                <button type="button" id="newAnalysisBtn" class="btn-primary-solid rounded-2xl px-8 py-4 text-[15px] font-semibold text-white shadow-premium">
+                    Analyze another CV
                 </button>
-                <button id="downloadReportBtn" class="px-8 py-4 border-2 border-slate-300 text-slate-700 font-semibold rounded-2xl hover:border-primary-400 hover:text-primary-600 transition-all duration-300 text-lg group">
-                    <i class="fas fa-download mr-3 group-hover:scale-110 transition-transform duration-200"></i>
-                    Download Report
+                <button type="button" id="downloadReportBtn" class="rounded-2xl border border-zinc-300 bg-white px-8 py-4 text-[15px] font-semibold text-zinc-800 shadow-sm transition hover:border-primary-300 hover:text-primary-800">
+                    Download report
                 </button>
-                <button id="rewriteCvBtn" class="px-8 py-4 border-2 border-primary-300 text-primary-700 font-semibold rounded-2xl hover:border-primary-500 hover:text-primary-600 transition-all duration-300 text-lg group">
-                    <i class="fas fa-magic mr-3 group-hover:scale-110 transition-transform duration-200"></i>
+                <button type="button" id="rewriteCvBtn" class="rounded-2xl border border-primary-200 bg-primary-50/80 px-8 py-4 text-[15px] font-semibold text-primary-800 backdrop-blur-sm transition hover:border-primary-400 hover:bg-primary-50">
                     Rewrite CV
                 </button>
             </div>
         </div>
     </section>
 
-    <!-- Format Selection Modal -->
-    <div id="formatModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl p-10 max-w-lg w-full shadow-2xl transform transition-all duration-300">
-            <div class="text-center mb-8">
-                <div class="w-16 h-16 bg-gradient-to-br from-primary-100 to-secondary-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                    <i class="fas fa-file-download text-2xl text-primary-600"></i>
-                </div>
-                <h3 class="text-2xl font-bold text-slate-900 mb-3">Choose Report Format</h3>
-                <p class="text-slate-600">Select your preferred format for the CV analysis report</p>
+    <div id="formatModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 p-4 backdrop-blur-sm flex">
+        <div class="w-full max-w-md border border-zinc-200 bg-white p-8">
+            <div class="mb-8 text-center">
+                <h3 class="font-display text-xl font-semibold text-zinc-900">Export format</h3>
+                <p class="mt-2 text-sm text-zinc-500">Choose how you want your report</p>
             </div>
-            
-            <div class="space-y-4 mb-8">
-                <!-- PDF Option -->
-                <div class="border-2 border-slate-200 rounded-2xl p-6 hover:border-primary-400 cursor-pointer transition-all duration-200 group hover:shadow-lg" id="pdfOption">
-                    <div class="flex items-center space-x-4">
-                        <div class="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center group-hover:bg-red-200 transition-colors duration-200">
-                            <i class="fas fa-file-pdf text-xl text-red-600"></i>
+
+            <div class="mb-8 space-y-3">
+                <div class="cursor-pointer border-2 border-zinc-200 p-5 transition hover:border-primary-500" id="pdfOption" role="button" tabindex="0">
+                    <div class="flex items-center gap-4">
+                        <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded bg-red-600 text-sm font-bold text-white">PDF</div>
+                        <div class="min-w-0 flex-1 text-left">
+                            <h4 class="font-semibold text-zinc-900">PDF</h4>
+                            <p class="text-sm text-zinc-500">Formatted for sharing</p>
                         </div>
-                        <div class="flex-1">
-                            <h4 class="font-semibold text-slate-900 text-lg">PDF Report</h4>
-                            <p class="text-slate-600">Professional formatted report with styling</p>
-                        </div>
-                        <div class="w-6 h-6 border-2 border-slate-300 rounded-full flex items-center justify-center" id="pdfRadio">
-                            <div class="w-3 h-3 bg-primary-600 rounded-full hidden" id="pdfRadioSelected"></div>
+                        <div class="flex h-6 w-6 items-center justify-center rounded-full border-2 border-zinc-300" id="pdfRadio" aria-hidden="true">
+                            <div class="hidden h-3 w-3 rounded-full bg-primary-600" id="pdfRadioSelected"></div>
                         </div>
                     </div>
                 </div>
-                
-                <!-- TXT Option -->
-                <div class="border-2 border-slate-200 rounded-2xl p-6 hover:border-primary-400 cursor-pointer transition-all duration-200 group hover:shadow-lg" id="txtOption">
-                    <div class="flex items-center space-x-4">
-                        <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center group-hover:bg-blue-200 transition-colors duration-200">
-                            <i class="fas fa-file-alt text-xl text-blue-600"></i>
+                <div class="cursor-pointer border-2 border-zinc-200 p-5 transition hover:border-primary-500" id="txtOption" role="button" tabindex="0">
+                    <div class="flex items-center gap-4">
+                        <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded bg-primary-600 text-sm font-bold text-white">TXT</div>
+                        <div class="min-w-0 flex-1 text-left">
+                            <h4 class="font-semibold text-zinc-900">Plain text</h4>
+                            <p class="text-sm text-zinc-500">Easy to edit</p>
                         </div>
-                        <div class="flex-1">
-                            <h4 class="font-semibold text-slate-900 text-lg">Text Report</h4>
-                            <p class="text-slate-600">Simple text format, easy to edit</p>
-                        </div>
-                        <div class="w-6 h-6 border-2 border-slate-300 rounded-full flex items-center justify-center" id="txtRadio">
-                            <div class="w-3 h-3 bg-primary-600 rounded-full" id="txtRadioSelected"></div>
+                        <div class="flex h-6 w-6 items-center justify-center rounded-full border-2 border-zinc-300" id="txtRadio" aria-hidden="true">
+                            <div class="h-3 w-3 rounded-full bg-primary-600" id="txtRadioSelected"></div>
                         </div>
                     </div>
                 </div>
             </div>
-            
-            <div class="flex space-x-4">
-                <button id="cancelFormat" class="flex-1 px-6 py-3 border-2 border-slate-300 text-slate-700 font-semibold rounded-xl hover:border-slate-400 transition-colors duration-200">
-                    Cancel
-                </button>
-                <button id="confirmFormat" class="flex-1 px-6 py-3 bg-gradient-to-br from-primary-600 to-secondary-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-200">
-                    Download Report
-                </button>
+
+            <div class="flex gap-3">
+                <button type="button" id="cancelFormat" class="flex-1 border border-zinc-300 py-3 text-[15px] font-semibold text-zinc-800 transition hover:bg-zinc-50">Cancel</button>
+                <button type="button" id="confirmFormat" class="btn-primary-solid flex-1 py-3 text-[15px] font-semibold text-white">Download</button>
             </div>
         </div>
     </div>
 
-    <!-- CV Rewrite Modal -->
-    <div id="cvRewriteModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
-        <div id="cvRewriteModalContent" class="bg-white rounded-3xl p-8 md:p-10 max-w-4xl w-full shadow-2xl transform transition-all duration-300">
-            <div class="flex items-center justify-between mb-6">
-                <div class="flex items-center gap-3">
-                    <div class="w-12 h-12 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-xl flex items-center justify-center">
-                        <i class="fas fa-magic text-white"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-slate-900">Rewrite CV</h3>
-                </div>
-                <button id="closeCvRewriteModal" class="w-10 h-10 bg-slate-100 hover:bg-slate-200 rounded-full flex items-center justify-center transition-colors duration-200">
-                    <i class="fas fa-times text-slate-600"></i>
-                </button>
+    <div id="cvRewriteModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 p-4 backdrop-blur-sm flex">
+        <div id="cvRewriteModalContent" class="w-full max-w-4xl border border-zinc-200 bg-white p-6 md:p-10">
+            <div class="mb-6 flex items-center justify-between gap-4">
+                <h3 class="font-display text-xl font-semibold text-zinc-900 md:text-2xl">Rewrite CV</h3>
+                <button type="button" id="closeCvRewriteModal" class="flex h-10 w-10 items-center justify-center rounded-full bg-zinc-100 text-xl leading-none text-zinc-600 transition hover:bg-zinc-200" aria-label="Close">×</button>
             </div>
 
-            <p class="text-slate-600 mb-6">We will use your uploaded CV and the AI insights to produce a clearer, more impactful version you can download instantly.</p>
+            <p class="mb-6 text-zinc-600">We use your extracted text and AI insights to draft a clearer version. Nothing is stored after the request.</p>
 
-            <!-- Options -->
-            <div class="grid md:grid-cols-3 gap-4 mb-6">
+            <div class="mb-6 grid gap-4 md:grid-cols-3">
                 <div>
-                    <label class="block text-sm font-medium text-slate-700 mb-2">Tone</label>
-                    <select id="rewriteTone" class="w-full border border-slate-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary-400">
+                    <label class="mb-2 block text-sm font-medium text-zinc-700" for="rewriteTone">Tone</label>
+                    <select id="rewriteTone" class="w-full rounded-xl border border-zinc-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary-500">
                         <option value="professional" selected>Professional</option>
                         <option value="concise">Concise</option>
                         <option value="impactful">Impactful</option>
                     </select>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-slate-700 mb-2">Target Role (optional)</label>
-                    <input id="rewriteTargetRole" type="text" placeholder="e.g., Senior Software Engineer" class="w-full border border-slate-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary-400" />
+                    <label class="mb-2 block text-sm font-medium text-zinc-700" for="rewriteTargetRole">Target role (optional)</label>
+                    <input id="rewriteTargetRole" type="text" placeholder="e.g. Senior Software Engineer" class="w-full rounded-xl border border-zinc-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary-500" autocomplete="off" />
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-slate-700 mb-2">Length</label>
-                    <select id="rewriteLength" class="w-full border border-slate-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary-400">
+                    <label class="mb-2 block text-sm font-medium text-zinc-700" for="rewriteLength">Length</label>
+                    <select id="rewriteLength" class="w-full rounded-xl border border-zinc-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary-500">
                         <option value="standard" selected>Standard</option>
                         <option value="concise">Concise</option>
                         <option value="detailed">Detailed</option>
@@ -409,686 +304,287 @@
                 </div>
             </div>
 
-            <!-- Preview -->
-            <div id="rewrittenCvSection" class="hidden mb-6">
-                <h4 class="text-lg font-semibold text-slate-900 mb-3">Rewritten Preview</h4>
-                <div id="rewrittenCvContent" class="border border-slate-200 rounded-xl p-4 max-h-80 overflow-y-auto text-slate-700"></div>
+            <div id="rewrittenCvSection" class="mb-6 hidden">
+                <h4 class="mb-3 text-lg font-semibold text-zinc-900">Preview</h4>
+                <div id="rewrittenCvContent" class="max-h-80 overflow-y-auto rounded-xl border border-zinc-200 p-4 text-zinc-700"></div>
             </div>
 
-            <!-- Actions -->
-            <div class="flex flex-col sm:flex-row gap-4 justify-end">
-                <button id="generateRewriteBtn" class="px-6 py-3 bg-gradient-to-r from-primary-600 to-secondary-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-200">
-                    <i class="fas fa-wand-magic-sparkles mr-2"></i>
-                    Generate Rewrite
+            <div class="flex flex-col justify-end gap-3 sm:flex-row sm:flex-wrap">
+                <button type="button" id="generateRewriteBtn" class="btn-primary-solid rounded-lg px-6 py-3 text-[15px] font-semibold text-white">
+                    Generate rewrite
                 </button>
-                <button id="downloadRewrittenCvBtn" class="px-6 py-3 border-2 border-slate-300 text-slate-700 font-semibold rounded-xl hover:border-slate-400 transition-all duration-200 hidden">
-                    <i class="fas fa-download mr-2"></i>
-                    Download TXT
+                <button type="button" id="downloadRewrittenCvBtn" class="hidden rounded-lg border border-zinc-300 px-6 py-3 text-[15px] font-semibold text-zinc-800 hover:bg-zinc-50">
+                    Download .txt
                 </button>
-                <button id="copyToClipboardBtn" class="px-6 py-3 border-2 border-slate-300 text-slate-700 font-semibold rounded-xl hover:border-slate-400 transition-all duration-200 hidden">
-                    <i class="fas fa-clipboard mr-2"></i>
+                <button type="button" id="copyToClipboardBtn" class="hidden rounded-lg border border-zinc-300 px-6 py-3 text-[15px] font-semibold text-zinc-800 hover:bg-zinc-50">
                     Copy
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- Features Section -->
-    <section id="features" class="py-24 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-20">
-                <div class="inline-flex items-center px-4 py-2 bg-primary-50 text-primary-700 rounded-full text-sm font-medium mb-6 border border-primary-200">
-                    <i class="fas fa-star mr-2"></i>
-                    Why Choose CVNalys?
+    <section id="features" class="border-t border-zinc-100 bg-white py-20 lg:py-28">
+        <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+            <div class="mb-16 text-center">
+                <div class="mb-4 inline-flex items-center rounded-full border border-primary-200 bg-primary-50/90 px-4 py-2 text-sm font-medium text-primary-800 backdrop-blur-sm">
+                    Why CVNalys
                 </div>
-                <h2 class="text-4xl lg:text-5xl font-bold text-slate-900 mb-6">Professional CV Analysis</h2>
-                <p class="text-xl text-slate-600 max-w-3xl mx-auto">Powered by advanced AI technology and designed for modern professionals</p>
+                <h2 class="font-display text-3xl font-semibold tracking-tight text-zinc-900 sm:text-4xl">Built for focus</h2>
+                <p class="mx-auto mt-4 max-w-2xl text-lg text-zinc-600">Premium layout, clear hierarchy, and privacy-minded processing.</p>
             </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-                <div class="text-center p-8 group">
-                    <div class="w-20 h-20 bg-black rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                        <i class="fas fa-brain text-white text-2xl"></i>
+
+            <div class="grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-10">
+                <article class="feature-card group rounded-3xl border border-zinc-200/80 bg-zinc-50/70 p-8 text-center shadow-sm backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:shadow-premium">
+                    <div class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-zinc-900 font-display text-lg font-semibold text-white shadow-md transition duration-300 group-hover:scale-105">
+                        01
                     </div>
-                    <h3 class="text-xl font-semibold text-slate-900 mb-4">AI-Powered Analysis</h3>
-                    <p class="text-slate-600 leading-relaxed">Advanced machine learning algorithms provide deep insights into your CV structure, content, and presentation.</p>
+                    <h3 class="font-display text-lg font-semibold text-zinc-900">Deep analysis</h3>
+                    <p class="mt-3 leading-relaxed text-zinc-600">Structure, skills, and narrative signals — surfaced clearly.</p>
+                </article>
+                <article class="feature-card group rounded-3xl border border-zinc-200/80 bg-zinc-50/70 p-8 text-center shadow-sm backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:shadow-premium">
+                    <div class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-zinc-900 font-display text-lg font-semibold text-white shadow-md transition duration-300 group-hover:scale-105">
+                        02
+                    </div>
+                    <h3 class="font-display text-lg font-semibold text-zinc-900">Privacy first</h3>
+                    <p class="mt-3 leading-relaxed text-zinc-600">Files are processed for analysis and removed — not stored as archives.</p>
+                </article>
+                <article class="feature-card group rounded-3xl border border-zinc-200/80 bg-zinc-50/70 p-8 text-center shadow-sm backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:shadow-premium">
+                    <div class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-zinc-900 font-display text-lg font-semibold text-white shadow-md transition duration-300 group-hover:scale-105">
+                        03
+                    </div>
+                    <h3 class="font-display text-lg font-semibold text-zinc-900">Instant feedback</h3>
+                    <p class="mt-3 leading-relaxed text-zinc-600">Results in seconds — so you can iterate fast.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section id="how-it-works" class="border-t border-zinc-100 bg-[#FAFAFA] py-20 lg:py-28">
+        <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+            <div class="mb-16 text-center">
+                <div class="mb-4 inline-flex items-center rounded-full border border-zinc-200 bg-white/90 px-4 py-2 text-sm font-medium text-zinc-700 shadow-sm backdrop-blur-sm">
+                    Flow
                 </div>
-                
-                <div class="text-center p-8 group">
-                    <div class="w-20 h-20 bg-black rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                        <i class="fas fa-shield-alt text-white text-2xl"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold text-slate-900 mb-4">Privacy First</h3>
-                    <p class="text-slate-600 leading-relaxed">Your CV is analyzed securely and never stored on our servers. Complete privacy and data protection.</p>
+                <h2 class="font-display text-3xl font-semibold tracking-tight text-zinc-900 sm:text-4xl">Three steps</h2>
+                <p class="mx-auto mt-4 max-w-2xl text-lg text-zinc-600">Upload, analyze, apply — no noise.</p>
+            </div>
+
+            <div class="grid grid-cols-1 gap-10 md:grid-cols-3 md:gap-12">
+                <div class="text-center">
+                    <div class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-primary-600 text-2xl font-display font-bold text-white shadow-premium transition hover:scale-105">1</div>
+                    <h3 class="font-display text-lg font-semibold text-zinc-900">Upload</h3>
+                    <p class="mt-3 leading-relaxed text-zinc-600">Drag in or pick a file — PDF, Word, or text.</p>
                 </div>
-                
-                <div class="text-center p-8 group">
-                    <div class="w-20 h-20 bg-black rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                        <i class="fas fa-rocket text-white text-2xl"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold text-slate-900 mb-4">Instant Results</h3>
-                    <p class="text-slate-600 leading-relaxed">Get comprehensive analysis and actionable recommendations in seconds, not hours or days.</p>
+                <div class="text-center">
+                    <div class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-primary-600 text-2xl font-display font-bold text-white shadow-premium transition hover:scale-105">2</div>
+                    <h3 class="font-display text-lg font-semibold text-zinc-900">Analyze</h3>
+                    <p class="mt-3 leading-relaxed text-zinc-600">Models read structure, skills, and gaps in one pass.</p>
+                </div>
+                <div class="text-center">
+                    <div class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-primary-600 text-2xl font-display font-bold text-white shadow-premium transition hover:scale-105">3</div>
+                    <h3 class="font-display text-lg font-semibold text-zinc-900">Improve</h3>
+                    <p class="mt-3 leading-relaxed text-zinc-600">Export or rewrite with guidance you can act on.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- How It Works Section -->
-    <section id="how-it-works" class="py-24 bg-gradient-to-br from-slate-50 to-primary-50/20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-20">
-                <div class="inline-flex items-center px-4 py-2 bg-primary-50 text-primary-700 rounded-full text-sm font-medium mb-6 border border-primary-200">
-                    <i class="fas fa-play mr-2"></i>
-                    How It Works
-                </div>
-                <h2 class="text-4xl lg:text-5xl font-bold text-slate-900 mb-6">Simple 3-Step Process</h2>
-                <p class="text-xl text-slate-600">Get your CV analyzed in minutes with our streamlined workflow</p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-                <div class="text-center group">
-                    <div class="w-24 h-24 bg-secondary-500 rounded-2xl flex items-center justify-center mx-auto mb-6 text-white text-3xl font-bold group-hover:scale-110 transition-transform duration-300 shadow-lg">1</div>
-                    <h3 class="text-xl font-semibold text-slate-900 mb-4">Upload CV</h3>
-                    <p class="text-slate-600 leading-relaxed">Drag & drop or select your CV file. We support PDF, DOCX, TXT, and RTF formats.</p>
-                </div>
-                
-                <div class="text-center group">
-                    <div class="w-24 h-24 bg-secondary-500 rounded-2xl flex items-center justify-center mx-auto mb-6 text-white text-3xl font-bold group-hover:scale-110 transition-transform duration-300 shadow-lg">2</div>
-                    <h3 class="text-xl font-semibold text-slate-900 mb-4">AI Analysis</h3>
-                    <p class="text-slate-600 leading-relaxed">Our AI analyzes content, skills, structure, and provides insights in real-time.</p>
-                </div>
-                
-                <div class="text-center group">
-                    <div class="w-24 h-24 bg-secondary-500 rounded-2xl flex items-center justify-center mx-auto mb-6 text-white text-3xl font-bold group-hover:scale-110 transition-transform duration-300 shadow-lg">3</div>
-                    <h3 class="text-xl font-semibold text-slate-900 mb-4">Get Results</h3>
-                    <p class="text-slate-600 leading-relaxed">Receive detailed insights, scores, and actionable recommendations instantly.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Enhanced Footer -->
-    <footer class="bg-slate-900 text-white">
-        <!-- Main Footer Content -->
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12 footer-grid">
-                <!-- Company Info -->
-                <div class="space-y-6 footer-animate">
-                    <div class="flex items-center space-x-3 footer-brand">
-                        <div class="w-10 h-10 bg-gradient-to-br from-primary-600 to-secondary-600 rounded-xl flex items-center justify-center shadow-lg footer-brand-logo">
-                            <i class="fas fa-file-alt text-white"></i>
-                        </div>
-                        <span class="text-2xl font-bold">CVNalys</span>
-                    </div>
-                    <p class="text-slate-400 leading-relaxed footer-description">
-                        Professional CV analysis powered by advanced AI technology. Transform your career with intelligent insights and actionable recommendations.
+    <footer class="border-t border-zinc-800 bg-zinc-950 text-zinc-300">
+        <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 gap-12 border-b border-zinc-800/80 pb-14 lg:grid-cols-12 lg:gap-10">
+                <div class="lg:col-span-4">
+                    <p class="font-display text-[15px] font-semibold tracking-tight text-white">CVNalys</p>
+                    <p class="mt-4 max-w-sm text-[14px] leading-relaxed text-zinc-500">
+                        Structured CV feedback with a quiet interface. Files are analyzed for your session — not archived as a library.
                     </p>
-                    <div class="flex space-x-4">
-                        <a href="#" class="w-10 h-10 bg-slate-800 hover:bg-primary-600 rounded-lg flex items-center justify-center transition-all duration-200 group social-icon">
-                            <i class="fab fa-twitter text-slate-400 group-hover:text-white transition-colors"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 bg-slate-800 hover:bg-primary-600 rounded-lg flex items-center justify-center transition-all duration-200 group social-icon">
-                            <i class="fab fa-linkedin text-slate-400 group-hover:text-white transition-colors"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 bg-slate-800 hover:bg-primary-600 rounded-lg flex items-center justify-center transition-all duration-200 group social-icon">
-                            <i class="fab fa-github text-slate-400 group-hover:text-white transition-colors"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 bg-slate-800 hover:bg-primary-600 rounded-lg flex items-center justify-center transition-all duration-200 group social-icon">
-                            <i class="fab fa-youtube text-slate-400 group-hover:text-white transition-colors"></i>
-                        </a>
+                    <div class="mt-8 flex flex-wrap gap-x-5 gap-y-2 text-[13px]">
+                        <a href="#" class="text-zinc-400 transition hover:text-white">Twitter</a>
+                        <a href="#" class="text-zinc-400 transition hover:text-white">LinkedIn</a>
+                        <a href="#" class="text-zinc-400 transition hover:text-white">GitHub</a>
                     </div>
                 </div>
 
-                <!-- Product -->
-                <div class="space-y-6 footer-animate">
-                    <h3 class="text-lg font-semibold text-white footer-section-header">Product</h3>
-                    <ul class="space-y-3 footer-link-list">
-                        <li>
-                            <a href="#features" class="text-slate-400 hover:text-primary-400 transition-colors duration-200 flex items-center group footer-link-group">
-                                <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform duration-200 chevron-icon"></i>
-                                Features
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#how-it-works" class="text-slate-400 hover:text-primary-400 transition-colors duration-200 flex items-center group footer-link-group">
-                                <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform duration-200 chevron-icon"></i>
-                                How It Works
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="text-slate-400 hover:text-primary-400 transition-colors duration-200 flex items-center group footer-link-group">
-                                <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform duration-200 chevron-icon"></i>
-                                Pricing
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="text-slate-400 hover:text-primary-400 transition-colors duration-200 flex items-center group footer-link-group">
-                                <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform duration-200 chevron-icon"></i>
-                                API Access
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="text-slate-400 hover:text-primary-400 transition-colors duration-200 flex items-center group footer-link-group">
-                                <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform duration-200 chevron-icon"></i>
-                                Enterprise
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- Company -->
-                <div class="space-y-6 footer-animate">
-                    <h3 class="text-lg font-semibold text-white footer-section-header">Company</h3>
-                    <ul class="space-y-3 footer-link-list">
-                        <li>
-                            <a href="#" class="text-slate-400 hover:text-primary-400 transition-colors duration-200 flex items-center group footer-link-group" id="aboutUsLink" onclick="console.log('About Us clicked via onclick'); document.getElementById('aboutUsOverlay').classList.remove('hidden'); document.getElementById('aboutUsPanel').style.transform = 'translateX(0)';">
-                                <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform duration-200 chevron-icon"></i>
-                                About Us
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="text-slate-400 hover:text-primary-400 transition-colors duration-200 flex items-center group footer-link-group">
-                                <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform duration-200 chevron-icon"></i>
-                                Careers
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="text-slate-400 hover:text-primary-400 transition-colors duration-200 flex items-center group footer-link-group">
-                                <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform duration-200 chevron-icon"></i>
-                                Press
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="text-slate-400 hover:text-primary-400 transition-colors duration-200 flex items-center group footer-link-group">
-                                <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform duration-200 chevron-icon"></i>
-                                Partners
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="text-slate-400 hover:text-primary-400 transition-colors duration-200 flex items-center group footer-link-group">
-                                <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform duration-200 chevron-icon"></i>
-                                Contact
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- Support & Legal -->
-                <div class="space-y-6 footer-animate">
-                    <h3 class="text-lg font-semibold text-white footer-section-header">Support & Legal</h3>
-                    <ul class="space-y-3 footer-link-list">
-                        <li>
-                            <a href="#" class="text-slate-400 hover:text-primary-400 transition-colors duration-200 flex items-center group footer-link-group">
-                                <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform duration-200 chevron-icon"></i>
-                                Help Center
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="text-slate-400 hover:text-primary-400 transition-colors duration-200 flex items-center group footer-link-group">
-                                <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform duration-200 chevron-icon"></i>
-                                Documentation
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="text-slate-400 hover:text-primary-400 transition-colors duration-200 flex items-center group footer-link-group">
-                                <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform duration-200 chevron-icon"></i>
-                                Privacy Policy
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="text-slate-400 hover:text-primary-400 transition-colors duration-200 flex items-center group footer-link-group">
-                                <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform duration-200 chevron-icon"></i>
-                                Terms of Service
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="text-slate-400 hover:text-primary-400 transition-colors duration-200 flex items-center group footer-link-group">
-                                <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform duration-200 chevron-icon"></i>
-                                Cookie Policy
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Newsletter Section -->
-            <div class="border-t border-slate-800 pt-12 mb-12 newsletter-section">
-                <div class="max-w-2xl mx-auto text-center">
-                    <h3 class="text-2xl font-bold text-white mb-4">Stay Updated</h3>
-                    <p class="text-slate-400 mb-6">
-                        Get the latest updates on CV analysis features, AI improvements, and career tips delivered to your inbox.
-                    </p>
-                    <div class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-                        <input 
-                            type="email" 
-                            placeholder="Enter your email" 
-                            class="flex-1 px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 newsletter-input"
-                        >
-                        <button class="px-6 py-3 bg-gradient-to-r from-primary-600 to-secondary-600 text-white font-semibold rounded-lg hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 newsletter-button">
-                            Subscribe
-                        </button>
+                <div class="grid grid-cols-2 gap-10 sm:grid-cols-3 lg:col-span-8 lg:grid-cols-3">
+                    <div>
+                        <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-zinc-500">Product</p>
+                        <ul class="mt-4 space-y-2.5 text-[14px]">
+                            <li><a href="#features" class="text-zinc-400 transition hover:text-white">Features</a></li>
+                            <li><a href="#how-it-works" class="text-zinc-400 transition hover:text-white">How it works</a></li>
+                            <li><a href="#" class="text-zinc-400 transition hover:text-white">Pricing</a></li>
+                            <li><a href="#" class="text-zinc-400 transition hover:text-white">API</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-zinc-500">Company</p>
+                        <ul class="mt-4 space-y-2.5 text-[14px]">
+                            <li><a href="#" class="text-zinc-400 transition hover:text-white" id="aboutUsLink">About</a></li>
+                            <li><a href="#" class="text-zinc-400 transition hover:text-white">Careers</a></li>
+                            <li><a href="#" class="text-zinc-400 transition hover:text-white">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-span-2 sm:col-span-1">
+                        <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-zinc-500">Legal</p>
+                        <ul class="mt-4 space-y-2.5 text-[14px]">
+                            <li><a href="#" class="text-zinc-400 transition hover:text-white">Privacy</a></li>
+                            <li><a href="#" class="text-zinc-400 transition hover:text-white">Terms</a></li>
+                            <li><a href="#" class="text-zinc-400 transition hover:text-white">Cookies</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
 
-            <!-- Bottom Section -->
-            <div class="border-t border-slate-800 pt-8 footer-bottom">
-                <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-                    <!-- Copyright & Links -->
-                    <div class="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-6 text-sm text-slate-400">
-                        <span>&copy; 2024 CVNalys. All rights reserved.</span>
-                        <div class="flex space-x-4">
-                            <a href="#" class="hover:text-white transition-colors duration-200">Status</a>
-                            <a href="#" class="hover:text-white transition-colors duration-200">Security</a>
-                            <a href="#" class="hover:text-white transition-colors duration-200">Sitemap</a>
-                        </div>
-                    </div>
-
-                    <!-- SISU AI Attribution -->
-                    <div class="flex items-center space-x-3">
-                        <div class="flex items-center space-x-2 text-slate-400 sisu-ai-attribution">
-                            <span class="text-sm">Powered by</span>
-                            <a href="https://sisuai.com" target="_blank" rel="noopener noreferrer" class="group">
-                                <div class="flex items-center space-x-2 hover:text-white transition-colors duration-200">
-                                    <img src="/static/images/sisuai_icon_wb-white.svg" alt="SISU AI" class="w-5 h-5 group-hover:scale-110 transition-transform duration-200">
-                                    <span class="font-medium text-white">SISU AI</span>
-                                </div>
-                            </a>
-                        </div>
+            <div class="mt-12 flex flex-col gap-8 border-b border-zinc-800/80 pb-12 lg:flex-row lg:items-end lg:justify-between">
+                <div class="max-w-md">
+                    <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-zinc-500">Updates</p>
+                    <p class="mt-2 text-[14px] text-zinc-500">Product notes and career writing tips. No spam.</p>
+                    <div class="mt-5 flex flex-col gap-3 sm:flex-row sm:items-stretch">
+                        <input type="email" placeholder="Work email" autocomplete="email" class="newsletter-input min-h-[44px] flex-1 border border-zinc-700 bg-zinc-900 px-4 text-[14px] text-white placeholder-zinc-500 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500" />
+                        <button type="button" class="btn-primary-solid newsletter-button min-h-[44px] shrink-0 px-6 text-[14px] font-semibold">Subscribe</button>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Floating Elements for Visual Appeal -->
-        <div class="relative overflow-hidden">
-            <div class="absolute -top-20 -left-20 w-40 h-40 bg-primary-500/10 rounded-full blur-3xl footer-floating-element"></div>
-            <div class="absolute -bottom-20 -right-20 w-40 h-40 bg-secondary-500/10 rounded-full blur-3xl footer-floating-element"></div>
+            <div class="mt-10 flex flex-col gap-4 text-[13px] text-zinc-500 sm:flex-row sm:items-center sm:justify-between">
+                <p>&copy; 2026 CVNalys. All rights reserved.</p>
+                <div class="flex flex-wrap gap-5">
+                    <a href="#" class="transition hover:text-zinc-300">Status</a>
+                    <a href="#" class="transition hover:text-zinc-300">Security</a>
+                    <a href="https://sisuai.com" target="_blank" rel="noopener noreferrer" class="transition hover:text-zinc-300">Technology partner — SISU AI</a>
+                </div>
+            </div>
         </div>
     </footer>
 
-    <!-- About Us Page Overlay -->
-    <div id="aboutUsOverlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden about-us-overlay">
+    <div id="aboutUsOverlay" class="about-us-overlay fixed inset-0 z-50 hidden bg-black/50 backdrop-blur-md">
         <div class="absolute inset-0 flex justify-end">
-            <!-- About Us Content Panel -->
-            <div id="aboutUsPanel" class="w-full max-w-4xl bg-white h-full transform translate-x-full transition-transform duration-700 ease-out overflow-y-auto about-us-panel">
-                <!-- Header -->
-                <div class="sticky top-0 bg-gradient-to-r from-slate-50 to-white border-b border-slate-200/60 backdrop-blur-xl z-10">
-                    <div class="flex items-center justify-between p-6">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-10 h-10 bg-gradient-to-br from-primary-600 to-secondary-600 rounded-xl flex items-center justify-center shadow-lg">
-                                <i class="fas fa-info-circle text-white"></i>
-                            </div>
-                            <h1 class="text-2xl font-bold text-slate-900 about-us-heading">About Us</h1>
-                        </div>
-                        <button id="closeAboutUs" class="w-12 h-12 bg-slate-100 hover:bg-slate-200 rounded-xl flex items-center justify-center transition-all duration-200 group close-button">
-                            <i class="fas fa-times text-slate-600 group-hover:text-slate-800 text-lg"></i>
-                        </button>
+            <div id="aboutUsPanel" class="about-us-panel h-full w-full max-w-4xl translate-x-full transform overflow-y-auto border-l border-zinc-200 bg-white transition-transform duration-500 ease-out">
+                <div class="sticky top-0 z-10 border-b border-zinc-100 bg-white/95 backdrop-blur-xl">
+                    <div class="flex items-center justify-between p-5 sm:p-6">
+                        <h1 class="about-us-heading font-display text-xl font-semibold text-zinc-900 sm:text-2xl">About</h1>
+                        <button type="button" id="closeAboutUs" class="close-button flex h-10 w-10 items-center justify-center rounded-full bg-zinc-100 text-xl leading-none text-zinc-600 transition hover:bg-zinc-200" aria-label="Close">×</button>
                     </div>
                 </div>
 
-                <!-- Content -->
-                <div class="p-8 space-y-12 about-us-content">
-                    <!-- Hero Section -->
-                    <div class="text-center space-y-6 about-us-hero">
-                        <div class="inline-flex items-center space-x-3 bg-gradient-to-r from-primary-50 to-secondary-50 px-6 py-3 rounded-full border border-primary-200 about-us-badge">
-                            <i class="fas fa-rocket text-primary-600"></i>
-                            <span class="text-primary-700 font-semibold">Innovation at the Speed of Thought</span>
-                        </div>
-                        
-                        <!-- Main Theme - Prominently Displayed -->
-                        <div class="bg-gradient-to-r from-primary-600 to-secondary-600 p-8 rounded-3xl text-white shadow-2xl transform hover:scale-105 transition-all duration-300 main-theme-highlight">
-                            <div class="inline-flex items-center space-x-3 bg-white/20 px-6 py-3 rounded-full mb-4 main-theme-badge">
-                                <i class="fas fa-globe-americas text-white"></i>
-                                <span class="font-semibold">Our Core Mission</span>
-                            </div>
-                            <h3 class="text-3xl lg:text-5xl font-bold mb-3 leading-tight main-theme-text">
-                                Accelerating AI for
-                                <br>
-                                <span class="text-yellow-300 text-yellow-accent">Emerging Markets</span>
-                                <br>
-                                and Economies
-                            </h3>
-                            <p class="text-lg opacity-90 max-w-2xl mx-auto">
-                                We're dedicated to democratizing AI technology and making advanced artificial intelligence accessible to businesses and individuals in emerging markets worldwide.
-                            </p>
-                        </div>
-                        
-                        <h2 class="text-4xl lg:text-5xl font-bold text-slate-900 leading-tight about-us-heading">
-                            Empowering the Future with
-                            <span class="bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent about-us-title">AI Innovation</span>
-                        </h2>
-                        <p class="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed about-us-body">
-                            SISU AI is at the forefront of artificial intelligence, creating solutions that transform how we work, learn, and interact with technology across emerging markets and developing economies.
+                <div class="about-us-content space-y-12 p-6 sm:p-8">
+                    <div class="border border-zinc-200 bg-zinc-50 p-8">
+                        <p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-zinc-400">CVNalys</p>
+                        <p class="mt-4 text-[15px] leading-relaxed text-zinc-600">
+                            CVNalys delivers structured CV feedback with a restrained, editorial layout. The product is built for clarity first: metrics, skills, and recommendations without visual noise.
                         </p>
                     </div>
 
-                    <!-- Mission & Vision -->
-                    <div class="grid md:grid-cols-2 gap-8 mission-vision-grid">
-                        <div class="bg-gradient-to-br from-primary-50 to-primary-100 p-8 rounded-2xl border border-primary-200 mission-card">
-                            <div class="w-16 h-16 bg-primary-600 rounded-2xl flex items-center justify-center mb-6">
-                                <i class="fas fa-bullseye text-white text-2xl"></i>
-                            </div>
-                            <h3 class="text-2xl font-bold text-slate-900 mb-4 about-us-subheading">Our Mission</h3>
-                            <p class="text-slate-700 leading-relaxed about-us-body">
-                                To accelerate AI adoption in emerging markets and developing economies by democratizing AI technology and making advanced artificial intelligence accessible to businesses and individuals worldwide, driving innovation and progress across all industries.
+                    <div class="grid gap-6 md:grid-cols-2">
+                        <div class="border border-zinc-200 bg-primary-50 p-8">
+                            <h3 class="font-display text-lg font-semibold text-zinc-900">Mission</h3>
+                            <p class="mt-3 text-[15px] leading-relaxed text-zinc-600">
+                                Make professional CV review accessible — fast feedback you can act on, with privacy treated as a default, not an add-on.
                             </p>
                         </div>
-                        <div class="bg-gradient-to-br from-secondary-50 to-secondary-100 p-8 rounded-2xl border border-secondary-200 vision-card">
-                            <div class="w-16 h-16 bg-secondary-600 rounded-2xl flex items-center justify-center mb-6">
-                                <i class="fas fa-eye text-white text-2xl"></i>
-                            </div>
-                            <h3 class="text-2xl font-bold text-slate-900 mb-4 about-us-subheading">Our Vision</h3>
-                            <p class="text-slate-700 leading-relaxed about-us-body">
-                                A world where AI enhances human potential, automates mundane tasks, and enables people to focus on creative, strategic, and meaningful work that drives human progress.
+                        <div class="border border-zinc-200 bg-white p-8">
+                            <h3 class="font-display text-lg font-semibold text-zinc-900">Technology partner</h3>
+                            <p class="mt-3 text-[15px] leading-relaxed text-zinc-600">
+                                Model and platform expertise from <a href="https://sisuai.com" target="_blank" rel="noopener noreferrer" class="font-medium text-primary-600 underline-offset-2 hover:underline">SISU AI</a>, focused on responsible deployment and emerging-market impact.
                             </p>
                         </div>
                     </div>
 
-                    <!-- Emerging Markets Focus Section -->
-                    <div class="bg-gradient-to-br from-yellow-50 to-orange-50 p-8 rounded-2xl border border-yellow-200 relative overflow-hidden emerging-markets-section">
-                        <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-yellow-200 to-orange-200 rounded-full opacity-20 transform translate-x-16 -translate-y-16 emerging-markets-floating"></div>
-                        <div class="relative z-10">
-                            <div class="text-center mb-8">
-                                <div class="inline-flex items-center space-x-3 bg-gradient-to-r from-yellow-500 to-orange-500 px-6 py-3 rounded-full text-white mb-4 emerging-markets-badge">
-                                    <i class="fas fa-globe-americas"></i>
-                                    <span class="font-semibold">Global Impact Focus</span>
-                                </div>
-                                <h3 class="text-3xl font-bold text-slate-900 mb-4 about-us-subheading">
-                                    Accelerating AI for Emerging Markets
-                                </h3>
-                                <p class="text-slate-700 text-lg max-w-3xl mx-auto about-us-body">
-                                    We believe that AI technology should be accessible to everyone, regardless of geographic location or economic status. Our mission is to bridge the digital divide and accelerate AI adoption in emerging markets.
-                                </p>
-                            </div>
-                            
-                            <div class="grid md:grid-cols-3 gap-6">
-                                <div class="bg-white p-6 rounded-xl border border-yellow-200 shadow-sm hover:shadow-lg transition-all duration-300 group emerging-markets-card">
-                                    <div class="w-12 h-12 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 emerging-markets-icon">
-                                        <i class="fas fa-users text-white"></i>
-                                    </div>
-                                    <h4 class="text-lg font-semibold text-slate-900 mb-3">Accessibility</h4>
-                                    <p class="text-slate-600 text-sm leading-relaxed">
-                                        Making AI solutions affordable and accessible to businesses in emerging markets through cost-effective implementations.
-                                    </p>
-                                </div>
-                                
-                                <div class="bg-white p-6 rounded-xl border border-yellow-200 shadow-sm hover:shadow-lg transition-all duration-300 group emerging-markets-card">
-                                    <div class="w-12 h-12 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 emerging-markets-icon">
-                                        <i class="fas fa-graduation-cap text-white"></i>
-                                    </div>
-                                    <h4 class="text-lg font-semibold text-slate-900 mb-3">Education</h4>
-                                    <p class="text-slate-600 text-sm leading-relaxed">
-                                        Providing training and knowledge transfer to empower local teams with AI capabilities and expertise.
-                                    </p>
-                                </div>
-                                
-                                <div class="bg-white p-6 rounded-xl border border-yellow-200 shadow-sm hover:shadow-lg transition-all duration-300 group emerging-markets-card">
-                                    <div class="w-12 h-12 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 emerging-markets-icon">
-                                        <i class="fas fa-handshake text-white"></i>
-                                    </div>
-                                    <h4 class="text-lg font-semibold text-slate-900 mb-3">Partnerships</h4>
-                                    <p class="text-slate-600 text-sm leading-relaxed">
-                                        Building strong local partnerships to ensure sustainable AI adoption and long-term success in emerging markets.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- What We Do -->
-                    <div class="space-y-8">
-                        <div class="text-center">
-                            <h3 class="text-3xl font-bold text-slate-900 mb-4 about-us-subheading">What We Do</h3>
-                            <p class="text-slate-600 text-lg max-w-2xl mx-auto about-us-body">
-                                SISU AI specializes in developing cutting-edge AI solutions that solve real-world problems and drive business transformation.
-                            </p>
-                        </div>
-                        <div class="grid md:grid-cols-3 gap-6 service-grid">
-                            <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:shadow-lg transition-all duration-300 group service-card">
-                                <div class="w-12 h-12 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 service-card-icon">
-                                    <i class="fas fa-brain text-white"></i>
-                                </div>
-                                <h4 class="text-xl font-semibold text-slate-900 mb-3 about-us-subheading">AI Development</h4>
-                                <p class="text-slate-600 leading-relaxed about-us-body">
-                                    Building custom AI models and solutions tailored to specific business needs and industry requirements.
-                                </p>
-                            </div>
-                            <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:shadow-lg transition-all duration-300 group service-card">
-                                <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 service-card-icon">
-                                    <i class="fas fa-cogs text-white"></i>
-                                </div>
-                                <h4 class="text-xl font-semibold text-slate-900 mb-3 about-us-subheading">Process Automation</h4>
-                                <p class="text-slate-600 leading-relaxed about-us-body">
-                                    Streamlining operations through intelligent automation, reducing costs and improving efficiency.
-                                </p>
-                            </div>
-                            <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:shadow-lg transition-all duration-300 group service-card">
-                                <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 service-card-icon">
-                                    <i class="fas fa-chart-line text-white"></i>
-                                </div>
-                                <h4 class="text-xl font-semibold text-slate-900 mb-3 about-us-subheading">Data Analytics</h4>
-                                <p class="text-slate-600 leading-relaxed about-us-body">
-                                    Transforming raw data into actionable insights that drive strategic decision-making and growth.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Why Choose SISU AI -->
-                    <div class="bg-gradient-to-br from-slate-50 to-primary-50 p-8 rounded-2xl border border-slate-200 why-choose-section">
-                        <div class="text-center mb-8">
-                            <h3 class="text-3xl font-bold text-slate-900 mb-4 about-us-subheading">Why Choose SISU AI?</h3>
-                            <p class="text-slate-600 text-lg max-w-2xl mx-auto about-us-body">
-                                We combine cutting-edge technology with deep industry expertise to deliver solutions that make a real difference.
-                            </p>
-                        </div>
-                        <div class="grid md:grid-cols-2 gap-6 why-choose-grid">
-                            <div class="space-y-4">
-                                <div class="flex items-start space-x-4 check-item">
-                                    <div class="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1 check-icon">
-                                        <i class="fas fa-check text-white text-sm"></i>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-semibold text-slate-900 about-us-subheading">Expert Team</h4>
-                                        <p class="text-slate-600 text-sm about-us-body">World-class AI researchers and engineers with decades of combined experience.</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-start space-x-4 check-item">
-                                    <div class="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1 check-icon">
-                                        <i class="fas fa-check text-white text-sm"></i>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-semibold text-slate-900 about-us-subheading">Innovation Focus</h4>
-                                        <p class="text-slate-600 text-sm about-us-body">Pioneering new approaches to AI that push the boundaries of what's possible.</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-start space-x-4 check-item">
-                                    <div class="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1 check-icon">
-                                        <i class="fas fa-check text-white text-sm"></i>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-semibold text-slate-900 about-us-subheading">Proven Results</h4>
-                                        <p class="text-slate-600 text-sm about-us-body">Track record of successful implementations across diverse industries.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="space-y-4">
-                                <div class="flex items-start space-x-4 check-item">
-                                    <div class="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1 check-icon">
-                                        <i class="fas fa-check text-white text-sm"></i>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-semibold text-slate-900 about-us-subheading">Customer Success</h4>
-                                        <p class="text-slate-600 text-sm about-us-body">Dedicated support and ongoing optimization to ensure your success.</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-start space-x-4 check-item">
-                                    <div class="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1 check-icon">
-                                        <i class="fas fa-check text-white text-sm"></i>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-semibold text-slate-900 about-us-subheading">Scalable Solutions</h4>
-                                        <p class="text-slate-600 text-sm about-us-body">AI systems that grow with your business and adapt to changing needs.</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-start space-x-4 check-item">
-                                    <div class="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1 check-icon">
-                                        <i class="fas fa-check text-white text-sm"></i>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-semibold text-slate-900 about-us-subheading">Ethical AI</h4>
-                                        <p class="text-slate-600 text-sm about-us-body">Committed to responsible AI development that benefits humanity.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Technology Stack -->
-                    <div class="space-y-6">
-                        <div class="text-center">
-                            <h3 class="text-3xl font-bold text-slate-900 mb-4 about-us-subheading">Our Technology Stack</h3>
-                            <p class="text-slate-600 text-lg max-w-2xl mx-auto about-us-body">
-                                We leverage the latest advancements in AI and machine learning to deliver cutting-edge solutions.
-                            </p>
-                        </div>
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 tech-grid">
-                            <div class="bg-white p-4 rounded-xl border border-slate-200 text-center hover:shadow-md transition-shadow duration-300 tech-card">
-                                <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mx-auto mb-3">
-                                    <i class="fas fa-robot text-white"></i>
-                                </div>
-                                <h4 class="font-semibold text-slate-900 about-us-subheading">Machine Learning</h4>
-                            </div>
-                            <div class="bg-white p-4 rounded-xl border border-slate-200 text-center hover:shadow-md transition-shadow duration-300 tech-card">
-                                <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center mx-auto mb-3">
-                                    <i class="fas fa-network-wired text-white"></i>
-                                </div>
-                                <h4 class="font-semibold text-slate-900 about-us-subheading">Neural Networks</h4>
-                            </div>
-                            <div class="bg-white p-4 rounded-xl border border-slate-200 text-center hover:shadow-md transition-shadow duration-300 tech-card">
-                                <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mx-auto mb-3">
-                                    <i class="fas fa-language text-white"></i>
-                                </div>
-                                <h4 class="font-semibold text-slate-900 about-us-subheading">NLP</h4>
-                            </div>
-                            <div class="bg-white p-4 rounded-xl border border-slate-200 text-center hover:shadow-md transition-shadow duration-300 tech-card">
-                                <div class="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center mx-auto mb-3">
-                                    <i class="fas fa-eye text-white"></i>
-                                </div>
-                                <h4 class="font-semibold text-slate-900 about-us-subheading">Computer Vision</h4>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Call to Action -->
-                    <div class="text-center bg-gradient-to-r from-primary-600 to-secondary-600 p-8 rounded-2xl text-white cta-section cta-section-enhanced">
-                        <div class="inline-flex items-center space-x-3 bg-white/20 px-6 py-3 rounded-full mb-6 cta-badge">
-                            <i class="fas fa-globe-americas text-white"></i>
-                            <span class="font-semibold">Join the AI Revolution</span>
-                        </div>
-                        <h3 class="text-3xl font-bold mb-4 about-us-heading">Ready to Accelerate AI in Emerging Markets?</h3>
-                        <p class="text-xl mb-6 opacity-90 text-white">
-                            Be part of the transformation. Discover how SISU AI can help you bring cutting-edge AI solutions to emerging markets and developing economies.
+                    <div class="border border-amber-200 bg-amber-50 p-8">
+                        <h3 class="font-display text-lg font-semibold text-zinc-900">Emerging markets</h3>
+                        <p class="mt-3 text-[15px] leading-relaxed text-zinc-700">
+                            We prioritize accessibility, education, and partnerships so advanced tools reach teams who are building careers and businesses outside the usual tech hubs.
                         </p>
-                        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                            <a href="https://sisuai.com" target="_blank" rel="noopener noreferrer" class="px-8 py-4 bg-white text-primary-600 font-semibold rounded-xl hover:shadow-lg transform hover:-translate-y-1 transition-all duration-200 cta-button">
+                        <ul class="mt-6 space-y-3 text-[15px] text-zinc-600">
+                            <li class="flex gap-3"><span class="text-primary-600">—</span> Affordable paths to adoption</li>
+                            <li class="flex gap-3"><span class="text-primary-600">—</span> Knowledge transfer for local teams</li>
+                            <li class="flex gap-3"><span class="text-primary-600">—</span> Long-term collaboration, not one-off drops</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="font-display text-lg font-semibold text-zinc-900">Why it matters</h3>
+                        <div class="mt-6 grid gap-4 sm:grid-cols-2">
+                            <div class="flex gap-3 border border-zinc-100 bg-white p-4">
+                                <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary-600 text-xs font-bold text-white">✓</span>
+                                <p class="text-sm text-zinc-600">Depth over buzzwords — feedback tied to your content.</p>
+                            </div>
+                            <div class="flex gap-3 border border-zinc-100 bg-white p-4">
+                                <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary-600 text-xs font-bold text-white">✓</span>
+                                <p class="text-sm text-zinc-600">Security-minded defaults; no decorative data collection.</p>
+                            </div>
+                            <div class="flex gap-3 border border-zinc-100 bg-white p-4">
+                                <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary-600 text-xs font-bold text-white">✓</span>
+                                <p class="text-sm text-zinc-600">Export and rewrite flows that respect your time.</p>
+                            </div>
+                            <div class="flex gap-3 border border-zinc-100 bg-white p-4">
+                                <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary-600 text-xs font-bold text-white">✓</span>
+                                <p class="text-sm text-zinc-600">Calm UI — typography and spacing do the work.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="border border-zinc-200 bg-primary-600 p-8 text-white">
+                        <h3 class="font-display text-lg font-semibold">Learn more</h3>
+                        <p class="mt-2 text-[15px] text-white/90">
+                            Explore SISU AI’s work on models, automation, and analytics for real-world teams.
+                        </p>
+                        <div class="mt-6 flex flex-col gap-3 sm:flex-row">
+                            <a href="https://sisuai.com" target="_blank" rel="noopener noreferrer" class="inline-flex justify-center border border-white/40 bg-white px-6 py-3 text-center text-[15px] font-semibold text-primary-600 transition hover:bg-zinc-100">
                                 Visit SISU AI
                             </a>
-                            <button id="closeAboutUsCta" class="px-8 py-4 bg-white/20 text-white font-semibold rounded-xl hover:bg-white/30 transition-all duration-200 border border-white/30 cta-button">
-                                Get Started Here
+                            <button type="button" id="closeAboutUsCta" class="border border-white/30 bg-white/10 px-6 py-3 text-[15px] font-semibold text-white transition hover:bg-white/20">
+                                Close
                             </button>
                         </div>
-                    </div>
-                    
-                    <!-- SISU AI Main Logo - Boldly Displayed at Bottom -->
-                    <div class="text-center py-8 border-t border-slate-200 mt-12">
-                        <img src="/static/images/sisuai_main.svg" alt="SISU AI" class="h-8 md:h-10 lg:h-12 mx-auto" />
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Demo Modal -->
-    <div id="demoModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden">
-        <div class="flex items-center justify-center min-h-screen p-4">
-            <div class="bg-white rounded-3xl shadow-2xl max-w-4xl w-full mx-4 transform scale-95 opacity-0 transition-all duration-300" id="demoModalContent">
-                <!-- Modal Header -->
-                <div class="flex items-center justify-between p-6 border-b border-slate-200">
-                    <h3 class="text-2xl font-bold text-slate-900">CVNalys Demo</h3>
-                    <button id="closeDemoModal" class="w-10 h-10 bg-slate-100 hover:bg-slate-200 rounded-full flex items-center justify-center transition-colors duration-200 group">
-                        <i class="fas fa-times text-slate-600 group-hover:text-slate-800 transition-colors duration-200"></i>
-                    </button>
+    <div id="demoModal" class="fixed inset-0 z-50 hidden bg-black/50 backdrop-blur-sm">
+        <div class="flex min-h-screen items-center justify-center p-4">
+            <div class="mx-4 w-full max-w-3xl scale-95 transform border border-zinc-200 bg-white opacity-0 shadow-lg transition-all duration-300" id="demoModalContent">
+                <div class="flex items-center justify-between border-b border-zinc-100 px-5 py-4 sm:px-6">
+                    <h3 class="font-display text-lg font-semibold text-zinc-900">Product tour</h3>
+                    <button type="button" id="closeDemoModal" class="flex h-10 w-10 items-center justify-center rounded-full bg-zinc-100 text-xl leading-none text-zinc-600 transition hover:bg-zinc-200" aria-label="Close">×</button>
                 </div>
-                
-                <!-- Modal Content -->
-                <div class="p-8 text-center">
-                    <!-- Video Placeholder with Play Icon -->
-                    <div class="relative bg-gradient-to-br from-slate-100 to-slate-200 rounded-2xl p-16 mb-8 overflow-hidden group cursor-pointer hover:from-slate-200 hover:to-slate-300 transition-all duration-300" id="videoPlaceholder">
-                        <!-- Background Pattern -->
-                        <div class="absolute inset-0 opacity-10">
-                            <div class="absolute top-0 left-0 w-32 h-32 bg-primary-200 rounded-full transform -translate-x-16 -translate-y-16"></div>
-                            <div class="absolute bottom-0 right-0 w-24 h-24 bg-secondary-200 rounded-full transform translate-x-12 translate-y-12"></div>
-                            <div class="absolute top-1/2 left-1/2 w-16 h-16 bg-yellow-200 rounded-full transform -translate-x-8 -translate-y-8"></div>
-                        </div>
-                        
-                        <!-- Play Icon -->
+                <div class="p-6 text-center sm:p-8">
+                    <div class="group relative mb-8 cursor-pointer border border-zinc-200 bg-zinc-100 p-14 transition hover:bg-zinc-50" id="videoPlaceholder">
                         <div class="relative z-10">
-                            <div class="w-24 h-24 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center mx-auto shadow-2xl group-hover:scale-110 transition-transform duration-300">
-                                <i class="fas fa-play text-white text-3xl ml-2"></i>
+                            <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-primary-600 text-3xl text-white transition group-hover:scale-105">
+                                <span class="ml-0.5" aria-hidden="true">▶</span>
                             </div>
                         </div>
-                        
-                        <!-- Hover Effect -->
-                        <div class="absolute inset-0 bg-gradient-to-br from-primary-500/20 to-secondary-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
-                    
-                    <!-- Demo Description -->
-                    <div class="max-w-2xl mx-auto">
-                        <h4 class="text-xl font-semibold text-slate-900 mb-4">See CVNalys in Action</h4>
-                        <p class="text-slate-600 leading-relaxed mb-6">
-                            Watch how CVNalys transforms your CV analysis experience with AI-powered insights, 
-                            professional recommendations, and instant feedback. See the magic happen in real-time!
+                    <div class="mx-auto max-w-2xl">
+                        <h4 class="mb-3 font-display text-lg font-semibold text-zinc-900">See CVNalys in action</h4>
+                        <p class="mb-8 text-[15px] leading-relaxed text-zinc-600">
+                            Walk through upload, analysis, and export — built for clarity and speed.
                         </p>
-                        
-                        <!-- Feature Highlights -->
-                        <div class="grid md:grid-cols-3 gap-4 mb-8">
-                            <div class="text-center p-4 bg-slate-50 rounded-xl">
-                                <div class="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center mx-auto mb-3">
-                                    <i class="fas fa-upload text-primary-600"></i>
-                                </div>
-                                <h5 class="font-semibold text-slate-900 mb-1">Easy Upload</h5>
-                                <p class="text-sm text-slate-600">Drag & drop your CV</p>
+                        <div class="mb-8 grid gap-4 md:grid-cols-3">
+                            <div class="border border-zinc-200 bg-zinc-50 p-4 text-center">
+                                <div class="mx-auto mb-3 flex h-10 w-10 items-center justify-center border border-zinc-200 bg-white font-display text-sm font-semibold text-zinc-900">1</div>
+                                <h5 class="font-semibold text-zinc-900">Upload</h5>
+                                <p class="text-sm text-zinc-500">Drag or pick a file</p>
                             </div>
-                            
-                            <div class="text-center p-4 bg-slate-50 rounded-xl">
-                                <div class="w-12 h-12 bg-secondary-100 rounded-xl flex items-center justify-center mx-auto mb-3">
-                                    <i class="fas fa-robot text-secondary-600"></i>
-                                </div>
-                                <h5 class="font-semibold text-slate-900 mb-1">AI Analysis</h5>
-                                <p class="text-sm text-slate-600">Instant insights</p>
+                            <div class="border border-zinc-200 bg-zinc-50 p-4 text-center">
+                                <div class="mx-auto mb-3 flex h-10 w-10 items-center justify-center border border-zinc-200 bg-zinc-900 font-display text-sm font-semibold text-white">2</div>
+                                <h5 class="font-semibold text-zinc-900">Analyze</h5>
+                                <p class="text-sm text-zinc-500">Structured insights</p>
                             </div>
-                            
-                            <div class="text-center p-4 bg-slate-50 rounded-xl">
-                                <div class="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center mx-auto mb-3">
-                                    <i class="fas fa-chart-line text-yellow-600"></i>
-                                </div>
-                                <h5 class="font-semibold text-slate-900 mb-1">Smart Reports</h5>
-                                <p class="text-sm text-slate-600">Download & share</p>
+                            <div class="border border-zinc-200 bg-zinc-50 p-4 text-center">
+                                <div class="mx-auto mb-3 flex h-10 w-10 items-center justify-center border border-zinc-200 bg-white font-display text-sm font-semibold text-zinc-900">3</div>
+                                <h5 class="font-semibold text-zinc-900">Report</h5>
+                                <p class="text-sm text-zinc-500">Download or share</p>
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- Action Buttons -->
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                        <button class="px-8 py-4 bg-gradient-to-r from-primary-600 to-secondary-600 text-white font-semibold rounded-xl hover:shadow-lg transform hover:-translate-y-1 transition-all duration-200">
-                            <i class="fas fa-play mr-2"></i>
-                            Start Demo
+                    <div class="flex flex-col justify-center gap-3 sm:flex-row">
+                        <button type="button" class="btn-primary-solid rounded-lg px-8 py-3.5 text-[15px] font-semibold text-white">
+                            Start demo
                         </button>
-                        <button class="px-8 py-4 bg-slate-100 text-slate-700 font-semibold rounded-xl hover:bg-slate-200 transition-colors duration-200">
-                            <i class="fas fa-info-circle mr-2"></i>
-                            Learn More
+                        <button type="button" class="rounded-lg border border-zinc-300 bg-white px-8 py-3.5 text-[15px] font-semibold text-zinc-900 transition hover:border-zinc-400">
+                            Learn more
                         </button>
                     </div>
                 </div>

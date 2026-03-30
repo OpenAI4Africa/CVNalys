@@ -55,7 +55,7 @@ class CVNalysApp {
         const DPR = Math.min(window.devicePixelRatio || 1, 2);
         let width = 0, height = 0, particles = [], rafId;
 
-        const colors = ['#93c5fd', '#bae6fd', '#e0f2fe'];
+        const colors = ['#1877F2', '#42A5FF', '#A6CBF7'];
         const PARTICLE_COUNT = 60; // lightweight
 
         function resize() {
@@ -81,11 +81,7 @@ class CVNalysApp {
 
         function step() {
             ctx.clearRect(0, 0, width, height);
-            // Gentle gradient glow to blend with existing background
-            const g = ctx.createRadialGradient(width * 0.7, height * 0.3, 0, width * 0.7, height * 0.3, Math.max(width, height) * 0.8);
-            g.addColorStop(0, 'rgba(147, 197, 253, 0.08)');
-            g.addColorStop(1, 'rgba(147, 197, 253, 0)');
-            ctx.fillStyle = g;
+            ctx.fillStyle = 'rgba(24, 119, 242, 0.03)';
             ctx.fillRect(0, 0, width, height);
 
             particles.forEach(p => {
@@ -107,7 +103,7 @@ class CVNalysApp {
                     const dist2 = dx * dx + dy * dy;
                     if (dist2 < 110 * 110) {
                         const alpha = Math.max(0, 0.08 - dist2 / (110 * 110) * 0.08);
-                        ctx.strokeStyle = `rgba(147, 197, 253, ${alpha})`;
+                        ctx.strokeStyle = `rgba(24, 119, 242, ${alpha})`;
                         ctx.lineWidth = 1;
                         ctx.beginPath();
                         ctx.moveTo(a.x, a.y);
@@ -661,7 +657,7 @@ class CVNalysApp {
         scoreLabel.style.opacity = '0';
         setTimeout(() => {
             scoreLabel.textContent = label;
-            scoreLabel.className = `font-semibold text-lg ${labelClass}`;
+            scoreLabel.className = `text-sm font-semibold uppercase tracking-wide ${labelClass}`;
             scoreLabel.style.opacity = '1';
         }, 150);
     }
@@ -723,17 +719,18 @@ class CVNalysApp {
         
         recommendations.forEach((recommendation, index) => {
             const recDiv = document.createElement('div');
-            recDiv.className = 'recommendation-item opacity-0';
+            recDiv.className = 'recommendation-item flex gap-3 opacity-0';
             recDiv.style.animationDelay = `${index * 100}ms`;
-            
-            const icon = document.createElement('i');
-            icon.className = 'fas fa-check-circle text-emerald-500 mr-3 text-lg';
-            
+
+            const mark = document.createElement('span');
+            mark.className = 'mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-700';
+            mark.textContent = '✓';
+            mark.setAttribute('aria-hidden', 'true');
+
             const text = document.createElement('span');
-            text.className = 'text-slate-700 leading-relaxed';
+            text.className = 'text-zinc-700 leading-relaxed';
             text.textContent = recommendation;
-            
-            recDiv.appendChild(icon);
+            recDiv.appendChild(mark);
             recDiv.appendChild(text);
             recommendationsContainer.appendChild(recDiv);
             
@@ -777,7 +774,7 @@ class CVNalysApp {
         const originalText = downloadBtn.innerHTML;
         
         if (downloadBtn) {
-            downloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-3"></i>Generating Report...';
+            downloadBtn.innerHTML = '<span class="inline-block h-4 w-4 animate-spin rounded-full border-2 border-zinc-800 border-t-transparent mr-2 align-[-2px]"></span>Generating…';
             downloadBtn.disabled = true;
         }
 
@@ -871,33 +868,22 @@ class CVNalysApp {
         const notification = document.createElement('div');
         notification.className = `fixed top-6 right-6 p-4 rounded-2xl shadow-2xl z-50 transform transition-all duration-500 translate-x-full max-w-sm`;
         
-        // Set colors based on type with enhanced gradients
         const colors = {
-            success: 'bg-gradient-to-r from-emerald-500 to-emerald-600 text-white',
-            error: 'bg-gradient-to-r from-red-500 to-red-600 text-white',
-            info: 'bg-gradient-to-r from-primary-500 to-primary-600 text-white',
-            warning: 'bg-gradient-to-r from-amber-500 to-amber-600 text-white'
+            success: 'bg-emerald-600 text-white',
+            error: 'bg-red-600 text-white',
+            info: 'bg-primary-600 text-white',
+            warning: 'bg-amber-600 text-white'
         };
-        
+
         notification.className += ` ${colors[type] || colors.info}`;
-        
-        // Add icon with enhanced styling
-        const icons = {
-            success: 'fas fa-check-circle',
-            error: 'fas fa-exclamation-circle',
-            info: 'fas fa-info-circle',
-            warning: 'fas fa-exclamation-triangle'
-        };
-        
+
         notification.innerHTML = `
-            <div class="flex items-start space-x-3">
-                <i class="${icons[type] || icons.info} text-xl mt-0.5"></i>
+            <div class="flex items-start gap-3">
+                <span class="mt-0.5 shrink-0 text-lg leading-none opacity-90" aria-hidden="true">●</span>
                 <div class="flex-1">
-                    <p class="font-medium">${message}</p>
+                    <p class="font-medium leading-snug">${message}</p>
                 </div>
-                <button class="text-white/80 hover:text-white transition-colors" onclick="this.parentElement.parentElement.remove()">
-                    <i class="fas fa-times"></i>
-                </button>
+                <button type="button" class="rounded px-2 text-lg leading-none text-white/90 hover:bg-white/15 hover:text-white" aria-label="Dismiss">×</button>
             </div>
         `;
         
@@ -1165,15 +1151,14 @@ class CVNalysApp {
                 icon.style.transform = 'translateY(0) scale(1)';
             });
             
-            icon.addEventListener('click', () => {
-                // Add ripple effect
-                this.createRippleEffect(icon);
+            icon.addEventListener('click', (e) => {
+                this.createRippleEffect(icon, e);
             });
         });
     }
     
     // Create ripple effect for social icons
-    createRippleEffect(element) {
+    createRippleEffect(element, event) {
         const ripple = document.createElement('div');
         ripple.classList.add('ripple-effect');
         ripple.style.cssText = `
@@ -1184,11 +1169,13 @@ class CVNalysApp {
             animation: ripple 0.6s linear;
             pointer-events: none;
         `;
-        
+
         const rect = element.getBoundingClientRect();
         const size = Math.max(rect.width, rect.height);
-        const x = event.clientX - rect.left - size / 2;
-        const y = event.clientY - rect.top - size / 2;
+        const cx = event && event.clientX != null ? event.clientX : rect.left + rect.width / 2;
+        const cy = event && event.clientY != null ? event.clientY : rect.top + rect.height / 2;
+        const x = cx - rect.left - size / 2;
+        const y = cy - rect.top - size / 2;
         
         ripple.style.width = ripple.style.height = size + 'px';
         ripple.style.left = x + 'px';
@@ -1403,8 +1390,7 @@ class CVNalysApp {
             });
         });
         
-        // Mission & Vision cards hover effects
-        const missionCards = document.querySelectorAll('#aboutUsPanel .bg-gradient-to-br');
+        const missionCards = document.querySelectorAll('#aboutUsPanel .about-us-content .grid.md\\:grid-cols-2 > div');
         missionCards.forEach(card => {
             card.addEventListener('mouseenter', () => {
                 card.style.transform = 'scale(1.02)';
@@ -1557,11 +1543,11 @@ class CVNalysApp {
             // Transform the placeholder to show video playing
             videoPlaceholder.innerHTML = `
                 <div class="relative z-10">
-                    <div class="w-24 h-24 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto shadow-2xl animate-pulse">
-                        <i class="fas fa-play text-white text-3xl ml-2"></i>
+                    <div class="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-emerald-600 text-3xl text-white shadow-lg animate-pulse">
+                        <span class="ml-0.5" aria-hidden="true">▶</span>
                     </div>
                     <div class="mt-4 text-center">
-                        <p class="text-slate-700 font-medium">Video Playing...</p>
+                        <p class="text-zinc-700 font-medium">Playing…</p>
                         <div class="flex items-center justify-center space-x-1 mt-2">
                             <div class="w-2 h-2 bg-slate-400 rounded-full animate-bounce"></div>
                             <div class="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
@@ -1646,7 +1632,7 @@ class CVNalysApp {
                 return;
             }
 
-            generateBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Rewriting...';
+            generateBtn.innerHTML = '<span class="inline-block h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent mr-2 align-[-2px]"></span>Rewriting…';
             generateBtn.disabled = true;
 
             try {
@@ -1675,7 +1661,7 @@ class CVNalysApp {
                 console.error('Rewrite error:', err);
                 this.showNotification(`Rewrite failed: ${err.message}`, 'error');
             } finally {
-                generateBtn.innerHTML = '<i class=\"fas fa-wand-magic-sparkles mr-2\"></i>Generate Rewrite';
+                generateBtn.innerHTML = 'Generate rewrite';
                 generateBtn.disabled = false;
             }
         });
@@ -1793,22 +1779,11 @@ class CVNalysApp {
         const videoPlaceholder = document.getElementById('videoPlaceholder');
         if (videoPlaceholder) {
             videoPlaceholder.innerHTML = `
-                <!-- Background Pattern -->
-                <div class="absolute inset-0 opacity-10">
-                    <div class="absolute top-0 left-0 w-32 h-32 bg-primary-200 rounded-full transform -translate-x-16 -translate-y-16"></div>
-                    <div class="absolute bottom-0 right-0 w-24 h-24 bg-secondary-200 rounded-full transform translate-x-12 translate-y-12"></div>
-                    <div class="absolute top-1/2 left-1/2 w-16 h-16 bg-yellow-200 rounded-full transform -translate-x-8 -translate-y-8"></div>
-                </div>
-                
-                <!-- Play Icon -->
                 <div class="relative z-10">
-                    <div class="w-24 h-24 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center mx-auto shadow-2xl group-hover:scale-110 transition-transform duration-300">
-                        <i class="fas fa-play text-white text-3xl ml-2"></i>
+                    <div class="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-primary-600 text-3xl text-white shadow-lg transition group-hover:scale-105">
+                        <span class="ml-0.5" aria-hidden="true">▶</span>
                     </div>
                 </div>
-                
-                <!-- Hover Effect -->
-                <div class="absolute inset-0 bg-gradient-to-br from-primary-500/20 to-secondary-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             `;
             
             videoPlaceholder.classList.remove('video-playing');
@@ -1833,37 +1808,24 @@ document.addEventListener('DOMContentLoaded', function() {
 // Handle page visibility changes with enhanced titles
 document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
-        document.title = 'CVNalys - Come back to analyze your CV! 📄';
+        document.title = 'CVNalys — Resume when you are ready';
     } else {
-        document.title = 'CVNalys - Professional CV Analysis Tool';
+        document.title = 'CVNalys — CV Analysis';
     }
 });
 
 // Handle offline/online events with enhanced notifications
 window.addEventListener('online', () => {
     if (window.cvnalysApp) {
-        window.cvnalysApp.showNotification('You are back online! 🚀', 'success');
+        window.cvnalysApp.showNotification('You are back online.', 'success');
     }
 });
 
 window.addEventListener('offline', () => {
     if (window.cvnalysApp) {
-        window.cvnalysApp.showNotification('You are offline. Please check your connection. 📡', 'warning');
+        window.cvnalysApp.showNotification('You are offline. Check your connection.', 'warning');
     }
 });
-
-// Enhanced Service Worker registration for PWA capabilities
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-            .then(registration => {
-                console.log('Service Worker registered successfully:', registration);
-            })
-            .catch(registrationError => {
-                console.log('Service Worker registration failed:', registrationError);
-            });
-    });
-}
 
 // Add performance monitoring
 if ('performance' in window) {
